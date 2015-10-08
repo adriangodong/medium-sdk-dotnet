@@ -45,11 +45,11 @@ To call Medium API, create an instance of client and call the methods.
     // Create a draft post.
     var post = client.CreatePost(user.Id, new Medium.Models.CreatePostRequestBody
     {
-        Title:         "Title",
-        ContentFormat: Medium.Models.ContentFormat.Html,
-        Tags = new[] { "title", "content", "tag" },
-        Content:       "<h2>Title</h2><p>Content</p>",
-        PublishStatus: Medium.Models.PublishStatus.Draft,
+        Title =         "Title",
+        ContentFormat = Medium.Models.ContentFormat.Html,
+        Tags =          new[] { "title", "content", "tag" },
+        Content =       "<h2>Title</h2><p>Content</p>",
+        PublishStatus = Medium.Models.PublishStatus.Draft,
     })
 
 Contributing
