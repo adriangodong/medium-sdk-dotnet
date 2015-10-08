@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Medium.Authentication;
 using Medium.Helpers;
@@ -25,7 +26,7 @@ namespace Medium
         {
             return "https://medium.com/m/oauth/authorize?" +
                 $"client_id={_clientId}&" +
-                $"scope=basicProfile,publishPost&" + // TODO: use scope parameter
+                $"scope={scope.Select(s => s.ToString().PascalCaseToCamelCase()).ConcatenateString(",")}&" +
                 $"state={state}&" +
                 $"response_type=code&" +
                 $"redirect_uri={redirectUri}&";

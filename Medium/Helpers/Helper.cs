@@ -58,19 +58,23 @@ namespace Medium.Helpers
             return request.GetResponse(Newtonsoft.Json.JsonConvert.DeserializeObject<JsonResponse<T>>)?.Data;
         }
 
-        public static string GenerateWwwFormUrlEncodedString(Dictionary<string, string> parameters)
+        public static string ConcatenateString(this IEnumerable<string> strings, string delimiter)
         {
-            var encodedParameters = parameters.
-                Select(p => $"{p.Key}={System.Web.HttpUtility.UrlEncode(p.Value)}");
-
             var sb = new StringBuilder();
-            foreach (var p in encodedParameters)
+            foreach (var str in strings)
             {
                 if (sb.Length > 0)
-                    sb.Append("&");
-                sb.Append(p);
+                    sb.Append(delimiter);
+                sb.Append(str);
             }
             return sb.ToString();
+        }
+
+        public static string GenerateWwwFormUrlEncodedString(Dictionary<string, string> parameters)
+        {
+            return parameters.
+                Select(p => $"{p.Key}={System.Web.HttpUtility.UrlEncode(p.Value)}").
+                ConcatenateString("&");
         }
 
         public static T GetResponse<T>(
@@ -115,6 +119,16 @@ namespace Medium.Helpers
         {
             if (!timestamp.HasValue) return null;
             return new DateTime(1970, 1, 1).AddMilliseconds(timestamp.Value);
+        }
+
+        public static string PascalCaseToCamelCase(this string source)
+        {
+            if (source.Length > 0 &&
+                new Regex("[A-Z]", RegexOptions.Compiled).IsMatch(source[0].ToString()))
+            {
+                return source[0].ToString().ToLowerInvariant() + source.Substring(1);
+            }
+            return source;
         }
 
         public static string CamelCaseToSpinalCase(this string source)

@@ -13,13 +13,22 @@ namespace Medium.Tests
         [TestMethod]
         public void GetAuthorizeUrl()
         {
-            var client = new Medium.OAuthClient(_clientId, _clientSecret);
+            var client = new Medium.OAuthClient("clientId", "clientSecret");
             var authorizeUrl = client.GetAuthorizeUrl("state", "uri",
                 new[] {
                     Medium.Authentication.Scope.BasicProfile,
                     Medium.Authentication.Scope.PublishPost
                 });
-            Assert.AreEqual(string.Empty, authorizeUrl);
+
+            var expectedUrl =
+                "https://medium.com/m/oauth/authorize?" +
+                "client_id=clientId&" +
+                "scope=basicProfile,publishPost&" +
+                "state=state&" +
+                "response_type=code&" +
+                "redirect_uri=uri&";
+
+            Assert.AreEqual(expectedUrl, authorizeUrl);
         }
 
         [TestMethod]
