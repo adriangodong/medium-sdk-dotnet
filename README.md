@@ -65,4 +65,4 @@ Authors
 License
 -------
 
-Licensed under [The MIT License](http://opensource.org/licenses/MIT).
+Licensed under [The MIT License](https://github.com/adriangodong/medium-sdk-dotnet/blob/master/LICENSE).
