@@ -27,7 +27,7 @@ namespace Medium
                     BaseUrl + $"/users/{authorId}/posts",
                     System.Net.Http.HttpMethod.Post,
                     token).
-                AddJson(new
+                SetRequestJson(new
                 {
                     title = createPostRequestBody.Title,
                     contentFormat = createPostRequestBody.ContentFormat.ToString().ToLowerInvariant(),
@@ -48,7 +48,7 @@ namespace Medium
                     BaseUrl + "/images",
                     System.Net.Http.HttpMethod.Post,
                     token).
-                AddMultipartFormData(new KeyValuePair<string, byte[]>(
+                SetRequestMultipartFormData(new KeyValuePair<string, byte[]>(
                     uploadImageRequestBody.ContentType,
                     uploadImageRequestBody.ContentBytes));
 

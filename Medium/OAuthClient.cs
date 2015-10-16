@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
 using Medium.Authentication;
 using Medium.Helpers;
 
@@ -61,17 +61,10 @@ namespace Medium
 
         private Token GetAccessToken(Dictionary<string, string> postParams)
         {
-            var request = WebRequest.Create(BaseUrl + "/tokens") as HttpWebRequest;
-            var requestBodyString = Helper.GenerateWwwFormUrlEncodedString(postParams);
-            var requestBodyBytes = System.Text.Encoding.UTF8.GetBytes(requestBodyString);
-
-            request.Method = WebRequestMethods.Http.Post.ToUpper();
-            request.ContentType = "application/x-www-form-urlencoded";
-            request.Accept = "application/json";
-            request.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
-            request.GetRequestStream().Write(requestBodyBytes, 0, requestBodyBytes.Length);
-
-            return request.GetResponse(Newtonsoft.Json.JsonConvert.DeserializeObject<Token>);
+            return Helper.
+                GetRequestWithToken(BaseUrl + "/tokens", HttpMethod.Post, null).
+                SetRequestWwwFormUrlUrlencoded(postParams).
+                GetResponse(Newtonsoft.Json.JsonConvert.DeserializeObject<Token>);
         }
 
     }
