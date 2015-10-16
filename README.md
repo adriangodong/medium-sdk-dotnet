@@ -5,7 +5,7 @@ This repository contains the open source SDK for integrating [Medium's OAuth2 AP
 Install
 -------
 
-    Nuget package coming soon!
+Use Nuget and search for '[MediumSdk](https://www.nuget.org/packages/MediumSdk/)'.
 
 Usage
 -----
@@ -35,7 +35,7 @@ Create an instance of OAuthClient to perform this function.
     var newAccessToken = oAuthClient.GetAccessToken(accessToken.RefreshToken);
 
 Once you have this access token, you may store it and reuse it in the future.
-To call Medium API, create an instance of client and call the methods.
+To call Medium API, create an instance of Client and call the methods.
 
     var client = new Medium.Client();
 

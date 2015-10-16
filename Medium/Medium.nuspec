@@ -6,11 +6,11 @@
     <title>$title$</title>
     <authors>Adrian Godong</authors>
     <owners>Adrian Godong</owners>
-    <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+    <licenseUrl>https://github.com/adriangodong/medium-sdk-dotnet/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/adriangodong/medium-sdk-dotnet</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Medium API .NET SDK</description>
-    <releaseNotes>First release.</releaseNotes>
+    <releaseNotes></releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>medium sdk</tags>
   </metadata>

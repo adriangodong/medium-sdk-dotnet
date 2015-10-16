@@ -60,6 +60,8 @@
     <Compile Include="Models\User.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Medium.nuspec" />
+    <None Include="nuget.bat" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
