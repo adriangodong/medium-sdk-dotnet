@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -26,7 +27,6 @@ namespace Medium.Helpers
             }
 
             request.Method = method.Method.ToUpper();
-            request.ContentType = "application/json";
             request.Accept = "application/json";
             request.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
 
@@ -42,6 +42,7 @@ namespace Medium.Helpers
             var requestBodyString = Newtonsoft.Json.JsonConvert.SerializeObject(obj);
             var requestBodyBytes = Encoding.UTF8.GetBytes(requestBodyString);
 
+            request.ContentType = "application/json";
             request.GetRequestStream().Write(requestBodyBytes, 0, requestBodyBytes.Length);
 
             return request;
@@ -59,8 +60,6 @@ namespace Medium.Helpers
                 boundary = Guid.NewGuid().ToString("N");
             }
 
-            request.ContentType = $"multipart/form-data; boundary={boundary}";
-
             var sb = new StringBuilder();
             sb.AppendLine($"--{boundary}");
             sb.AppendLine("Content-Disposition: form-data; name=\"image\"; filename=\"image\"");
@@ -70,6 +69,7 @@ namespace Medium.Helpers
             var requestBodyPrefixBytes = Encoding.UTF8.GetBytes(sb.ToString());
             var requestBodySuffixBytes = Encoding.UTF8.GetBytes($"--{boundary}--");
 
+            request.ContentType = $"multipart/form-data; boundary={boundary}";
             request.GetRequestStream().Write(requestBodyPrefixBytes, 0, requestBodyPrefixBytes.Length);
             request.GetRequestStream().Write(content.Value, 0, content.Value.Length);
             request.GetRequestStream().Write(requestBodySuffixBytes, 0, requestBodySuffixBytes.Length);
@@ -78,11 +78,14 @@ namespace Medium.Helpers
         }
 
         // Core.WebRequestExtensions.cs
-        public static WebRequest SetRequestWwwFormUrlUrlencoded(this WebRequest request, Dictionary<string, string> postParams)
+        public static WebRequest SetRequestWwwFormUrlUrlencoded(
+            this WebRequest request,
+            Dictionary<string, string> postParams)
         {
             var requestBodyString = GenerateWwwFormUrlEncodedString(postParams);
             var requestBodyBytes = Encoding.UTF8.GetBytes(requestBodyString);
 
+            request.ContentType = "application/x-www-form-urlencoded";
             request.GetRequestStream().Write(requestBodyBytes, 0, requestBodyBytes.Length);
 
             return request;
