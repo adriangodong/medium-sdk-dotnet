@@ -126,14 +126,24 @@ namespace Medium.Helpers
                 var responseStream = ex.Response?.GetResponseStream();
                 if (responseStream != null)
                 {
-                    //logger.Error(responseStream.ReadToEnd(), ex);
+                    var responseBody = responseStream.ReadToEnd();
+                    throw new InvalidOperationException(responseBody, ex);
                 }
-                else
-                {
-                    //logger.Error(ex.Status, ex);
-                }
+                throw;
             }
-            return default(T);
+        }
+
+        // Core.StreamExtensions.cs
+        public static string ReadToEnd(
+            this Stream stream,
+            bool seekToStart = true,
+            System.Text.Encoding encoding = null)
+        {
+            var buffer = new byte[stream.Length];
+            if (stream.CanSeek && seekToStart)
+                stream.Seek(0, SeekOrigin.Begin);
+            stream.Read(buffer, 0, (int)stream.Length);
+            return (encoding ?? Encoding.UTF8).GetString(buffer);
         }
 
         // Core.Common.cs
