@@ -14,6 +14,9 @@ namespace Medium.Helpers
     internal static class Helper
     {
 
+        private static readonly Regex IsUpperCaseRegex = new Regex("([A-Z])", RegexOptions.Compiled);
+        private static readonly Regex IsSetOfDigitsRegex = new Regex("(\\d+)", RegexOptions.Compiled);
+
         public static HttpWebRequest GetRequestWithToken(
             string endpointUrl,
             HttpMethod method,
@@ -175,10 +178,16 @@ namespace Medium.Helpers
         }
 
         // Core.StringExtensions.cs
+        public static string Replace(this string source, Regex regex, string replacement)
+        {
+            return regex.Replace(source, replacement);
+        }
+
+        // Core.StringExtensions.cs
         public static string PascalCaseToCamelCase(this string source)
         {
             if (source.Length > 0 &&
-                new Regex("[A-Z]", RegexOptions.Compiled).IsMatch(source[0].ToString()))
+                IsUpperCaseRegex.IsMatch(source[0].ToString()))
             {
                 return source[0].ToString().ToLowerInvariant() + source.Substring(1);
             }
@@ -188,8 +197,10 @@ namespace Medium.Helpers
         // Core.StringExtensions.cs
         public static string CamelCaseToSpinalCase(this string source)
         {
-            return new Regex("\\B([A-Z])", RegexOptions.Compiled).
-                Replace(source, "-$1").
+            return source.
+                PascalCaseToCamelCase().
+                Replace(IsUpperCaseRegex, "-$1").
+                Replace(IsSetOfDigitsRegex, "-$1").
                 ToLowerInvariant();
         }
 
