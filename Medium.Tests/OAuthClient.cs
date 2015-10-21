@@ -1,6 +1,4 @@
-﻿using System;
-using System.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Medium.Tests
 {

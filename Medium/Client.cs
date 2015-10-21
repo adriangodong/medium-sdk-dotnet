@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Medium.Authentication;
+﻿using Medium.Authentication;
 using Medium.Helpers;
 using Medium.Models;
 
@@ -48,9 +47,9 @@ namespace Medium
                     BaseUrl + "/images",
                     System.Net.Http.HttpMethod.Post,
                     token).
-                SetRequestMultipartFormData(new KeyValuePair<string, byte[]>(
+                SetRequestMultipartFormData(
                     uploadImageRequestBody.ContentType,
-                    uploadImageRequestBody.ContentBytes));
+                    uploadImageRequestBody.ContentBytes);
 
             return request.GetResponseJson<Image>();
         }

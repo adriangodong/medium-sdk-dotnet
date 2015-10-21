@@ -77,7 +77,13 @@ namespace Medium.Tests
                 ContentBytes = System.Convert.FromBase64String("R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=")
             };
 
-            Assert.IsNotNull(client.UploadImage(body, new Token { AccessToken = _accessToken }));
+            string md5 = System.Convert.ToBase64String(
+                System.Security.Cryptography.MD5.Create().ComputeHash(body.ContentBytes)).TrimEnd('=');
+
+            var image = client.UploadImage(body, new Token {AccessToken = _accessToken});
+            Assert.IsNotNull(image);
+            Assert.IsNotNull(image.Url);
+            Assert.AreEqual(md5, image.Md5);
         }
 
     }

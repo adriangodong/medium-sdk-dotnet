@@ -54,7 +54,8 @@ namespace Medium.Helpers
         // Core.WebRequestExtensions.cs
         public static WebRequest SetRequestMultipartFormData(
             this WebRequest request,
-            KeyValuePair<string, byte[]> content,
+            string contentType,
+            byte[] content,
             string boundary = null)
         {
             // if boundary is still empty, generate one
@@ -66,15 +67,15 @@ namespace Medium.Helpers
             var sb = new StringBuilder();
             sb.AppendLine($"--{boundary}");
             sb.AppendLine("Content-Disposition: form-data; name=\"image\"; filename=\"image\"");
-            sb.AppendLine($"Content-Type: {content.Key}");
+            sb.AppendLine($"Content-Type: {contentType}");
             sb.AppendLine();
 
             var requestBodyPrefixBytes = Encoding.UTF8.GetBytes(sb.ToString());
-            var requestBodySuffixBytes = Encoding.UTF8.GetBytes($"--{boundary}--");
+            var requestBodySuffixBytes = Encoding.UTF8.GetBytes($"{Environment.NewLine}--{boundary}--");
 
             request.ContentType = $"multipart/form-data; boundary={boundary}";
             request.GetRequestStream().Write(requestBodyPrefixBytes, 0, requestBodyPrefixBytes.Length);
-            request.GetRequestStream().Write(content.Value, 0, content.Value.Length);
+            request.GetRequestStream().Write(content, 0, content.Length);
             request.GetRequestStream().Write(requestBodySuffixBytes, 0, requestBodySuffixBytes.Length);
 
             return request;
