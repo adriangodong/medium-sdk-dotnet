@@ -31,10 +31,10 @@ namespace Medium.Helpers
 
             request.Method = method.Method.ToUpper();
             request.Accept = "application/json";
-            request.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
+            request.Headers[HttpRequestHeader.AcceptCharset] = "utf-8";
 
             if (token != null)
-                request.Headers.Add("Authorization", "Bearer " + token.AccessToken);
+                request.Headers["Authorization"] = "Bearer " + token.AccessToken;
 
             return request;
         }
@@ -167,7 +167,7 @@ namespace Medium.Helpers
         public static string GenerateWwwFormUrlEncodedString(Dictionary<string, string> parameters)
         {
             return parameters.
-                Select(p => $"{p.Key}={System.Web.HttpUtility.UrlEncode(p.Value)}").
+                Select(p => $"{p.Key}={System.Text.Encodings.Web.UrlEncoder.Default.Encode(p.Value)}").
                 ConcatenateString("&");
         }
 
@@ -205,5 +205,19 @@ namespace Medium.Helpers
                 ToLowerInvariant();
         }
 
+        private static Stream GetRequestStream(this WebRequest request)
+        {
+            System.Threading.Tasks.Task<Stream> task = request.GetRequestStreamAsync();
+            while (task.IsCompleted) { }
+            return task.Result;
+        }
+        
+        private static WebResponse GetResponse(this WebRequest request)
+        {
+            System.Threading.Tasks.Task<WebResponse> task = request.GetResponseAsync();
+            while (task.IsCompleted) { }
+            return task.Result;
+        }
+        
     }
 }

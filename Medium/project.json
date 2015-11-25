@@ -1,0 +1,30 @@
+{
+  "version": "1.0.0-*",
+  "description": "MediumSdk",
+  "authors": [ "Adrian Godong" ],
+  "tags": [""],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "tooling": {
+    "defaultNamespace": "Medium"
+  },
+
+  "frameworks": {
+    "dnxcore50": {
+      "dependencies": {
+        "Newtonsoft.Json": "8.0.1-beta3",
+        "Microsoft.CSharp": "4.0.1-beta-23516",
+        "System.Collections": "4.0.11-beta-23516",
+        "System.Linq": "4.0.1-beta-23516",
+        "System.Net.Http": "4.0.1-beta-23516",
+        "System.Net.Requests": "4.0.11-beta-23516",
+        "System.Runtime": "4.0.21-beta-23516",
+        "System.Text.Encoding": "4.0.11-beta-23516",
+        "System.Text.Encodings.Web": "4.0.0-beta-23516",
+        "System.Text.RegularExpressions": "4.0.11-beta-23516",
+        "System.Threading": "4.0.11-beta-23516",
+        "System.Threading.Tasks": "4.0.11-beta-23516"
+      }
+    }
+  }
+}
