@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0-*",
+  "description": "MediumSdk",
+  "authors": [ "Adrian Godong" ],
+  "tags": [""],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "tooling": {
+    "defaultNamespace": "Medium"
+  },
+  
+  "dependencies": {
+    "Microsoft.Extensions.Configuration": "1.0.0-rc1-final",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
+	  "Medium" : "",
+    "xunit": "2.1.0",
+    "xunit.runner.dnx": "2.1.0-rc1-build204"
+  },
+  
+  "commands": {
+    "test": "xunit.runner.dnx"
+  },
+
+  "frameworks": {
+    "dnxcore50": {
+      "dependencies": {
+        "Microsoft.CSharp": "4.0.1-beta-23516",
+        "System.Linq": "4.0.1-beta-23516",
+        "System.Security.Cryptography.Algorithms": "4.0.0-beta-23516"
+      }
+    }
+  }
+}

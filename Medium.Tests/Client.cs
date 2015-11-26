@@ -1,32 +1,38 @@
-﻿using System.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using System.Linq;
 using Medium.Authentication;
 using Medium.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Medium.Tests
 {
-    [TestClass]
     public class Client
     {
 
-        private readonly string _accessToken = ConfigurationManager.AppSettings["AccessToken"];
+        private readonly string _accessToken;
 
-        [TestMethod]
+        public Client() {
+            var configuration = new ConfigurationBuilder().
+                AddJsonFile("config.json").
+                Build();
+            _accessToken =  configuration["AccessToken"];
+        }
+
+        [Fact]
         public void GetCurrentUser()
         {
             var client = new Medium.Client();
             var user = client.GetCurrentUser(new Token { AccessToken = _accessToken });
-            Assert.IsNotNull(user);
+            Assert.NotEqual(null, user);
 
-            Assert.IsNotNull(user.Id);
-            Assert.IsNotNull(user.Username);
-            Assert.IsNotNull(user.Name);
-            Assert.IsNotNull(user.Url);
-            Assert.IsNotNull(user.ImageUrl);
+            Assert.NotEqual(null, user.Id);
+            Assert.NotEqual(null, user.Username);
+            Assert.NotEqual(null, user.Name);
+            Assert.NotEqual(null, user.Url);
+            Assert.NotEqual(null, user.ImageUrl);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreatePost()
         {
             var client = new Medium.Client();
@@ -37,7 +43,7 @@ namespace Medium.Tests
             var license = License.Cc40By;
 
             var author = client.GetCurrentUser(new Token { AccessToken = _accessToken });
-            Assert.IsNotNull(author);
+            Assert.NotEqual(null, author);
 
             var body = new CreatePostRequestBody
             {
@@ -51,22 +57,22 @@ namespace Medium.Tests
             };
 
             var post = client.CreatePost(author.Id, body, new Token { AccessToken = _accessToken });
-            Assert.IsNotNull(post);
+            Assert.NotEqual(null, post);
 
-            Assert.IsNotNull(post.Id);
-            Assert.AreEqual(title, post.Title);
-            Assert.AreEqual(author.Id, post.AuthorId);
-            Assert.IsTrue(tags.All(post.Tags.Contains));
-            Assert.IsTrue(post.Tags.All(tags.Contains));
-            Assert.IsNotNull(post.Url);
-            Assert.AreEqual(canonicalUrl, post.CanonicalUrl);
-            Assert.AreEqual(publishStatus, post.PublishStatus);
-            Assert.IsNotNull(post.PublishedAt);
-            Assert.AreEqual(license, post.License);
-            // Assert.IsNotNull(post.LicenseUrl); // Looks like Medium does not return this field.
+            Assert.NotEqual(null, post.Id);
+            Assert.Equal(title, post.Title);
+            Assert.Equal(author.Id, post.AuthorId);
+            Assert.Equal(true, tags.All(t => post.Tags.Contains(t)));
+            Assert.Equal(true, post.Tags.All(t => tags.Contains(t)));
+            Assert.NotEqual(null, post.Url);
+            Assert.Equal(canonicalUrl, post.CanonicalUrl);
+            Assert.Equal(publishStatus, post.PublishStatus);
+            Assert.NotEqual(null, post.PublishedAt);
+            Assert.Equal(license, post.License);
+            // Assert.NotEqual(null, post.LicenseUrl); // Looks like Medium does not return this field.
         }
 
-        [TestMethod]
+        [Fact]
         public void UploadImage()
         {
             var client = new Medium.Client();
@@ -81,9 +87,9 @@ namespace Medium.Tests
                 System.Security.Cryptography.MD5.Create().ComputeHash(body.ContentBytes)).TrimEnd('=');
 
             var image = client.UploadImage(body, new Token {AccessToken = _accessToken});
-            Assert.IsNotNull(image);
-            Assert.IsNotNull(image.Url);
-            Assert.AreEqual(md5, image.Md5);
+            Assert.NotEqual(null, image);
+            Assert.NotEqual(null, image.Url);
+            Assert.Equal(md5, image.Md5);
         }
 
     }
