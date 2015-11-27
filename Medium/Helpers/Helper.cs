@@ -74,9 +74,11 @@ namespace Medium.Helpers
             var requestBodySuffixBytes = Encoding.UTF8.GetBytes($"{Environment.NewLine}--{boundary}--");
 
             request.ContentType = $"multipart/form-data; boundary={boundary}";
-            request.GetRequestStream().Write(requestBodyPrefixBytes, 0, requestBodyPrefixBytes.Length);
-            request.GetRequestStream().Write(content, 0, content.Length);
-            request.GetRequestStream().Write(requestBodySuffixBytes, 0, requestBodySuffixBytes.Length);
+            
+            var requestStream = request.GetRequestStream();
+            requestStream.Write(requestBodyPrefixBytes, 0, requestBodyPrefixBytes.Length);
+            requestStream.Write(content, 0, content.Length);
+            requestStream.Write(requestBodySuffixBytes, 0, requestBodySuffixBytes.Length);
 
             return request;
         }
@@ -208,14 +210,14 @@ namespace Medium.Helpers
         private static Stream GetRequestStream(this WebRequest request)
         {
             System.Threading.Tasks.Task<Stream> task = request.GetRequestStreamAsync();
-            while (task.IsCompleted) { }
+            while (!task.IsCompleted) { }
             return task.Result;
         }
         
         private static WebResponse GetResponse(this WebRequest request)
         {
             System.Threading.Tasks.Task<WebResponse> task = request.GetResponseAsync();
-            while (task.IsCompleted) { }
+            while (!task.IsCompleted) { }
             return task.Result;
         }
         
