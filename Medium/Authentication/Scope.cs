@@ -4,6 +4,8 @@
     {
         //basicProfile
         BasicProfile,
+        // listPublications
+        ListPublications,
         //publishPost
         PublishPost,
         //uploadImage

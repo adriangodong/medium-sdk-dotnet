@@ -1,4 +1,5 @@
-﻿using Medium.Authentication;
+﻿using System.Collections.Generic;
+using Medium.Authentication;
 using Medium.Helpers;
 using Medium.Models;
 
@@ -19,11 +20,52 @@ namespace Medium
             return request.GetResponseJson<User>();
         }
 
+        public IEnumerable<Publication> GetPublications(string userId, Token token)
+        {
+            var request = Helper.GetRequestWithToken(
+                BaseUrl + $"/users/{userId}/publications",
+                System.Net.Http.HttpMethod.Get,
+                token);
+
+            return request.GetResponseJson<IEnumerable<Publication>>();
+        }
+
+        public IEnumerable<Contributor> GetContributors(string publicationId, Token token)
+        {
+            var request = Helper.GetRequestWithToken(
+                BaseUrl + $"/publications/{publicationId}/contributors",
+                System.Net.Http.HttpMethod.Get,
+                token);
+
+            return request.GetResponseJson<IEnumerable<Contributor>>();
+        }
+
         public Post CreatePost(string authorId, CreatePostRequestBody createPostRequestBody, Token token)
         {
             var request = Helper.
                 GetRequestWithToken(
                     BaseUrl + $"/users/{authorId}/posts",
+                    System.Net.Http.HttpMethod.Post,
+                    token).
+                SetRequestJson(new
+                {
+                    title = createPostRequestBody.Title,
+                    contentFormat = createPostRequestBody.ContentFormat.ToString().ToLowerInvariant(),
+                    content = createPostRequestBody.Content,
+                    tags = createPostRequestBody.Tags,
+                    canonicalUrl = createPostRequestBody.CanonicalUrl,
+                    publishStatus = createPostRequestBody.PublishStatus.ToString().ToLowerInvariant(),
+                    license = createPostRequestBody.License.ToString().CamelCaseToSpinalCase(),
+                });
+
+            return request.GetResponseJson<Post>();
+        }
+
+        public Post CreatePostUnderPublication(string publicationId, CreatePostRequestBody createPostRequestBody, Token token)
+        {
+            var request = Helper.
+                GetRequestWithToken(
+                    BaseUrl + $"/publications/{publicationId}/posts",
                     System.Net.Http.HttpMethod.Post,
                     token).
                 SetRequestJson(new

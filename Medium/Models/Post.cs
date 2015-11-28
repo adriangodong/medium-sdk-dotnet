@@ -7,6 +7,7 @@ namespace Medium.Models
     public class Post
     {
         public string Id { get; set; }
+        public string PublicationId { get; set; }
         public string Title { get; set; }
         public string AuthorId { get; set; }
         public string[] Tags { get; set; }
