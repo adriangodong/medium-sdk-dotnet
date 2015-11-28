@@ -1,12 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Xunit;
 
 namespace Medium.Tests
 {
-    [TestClass]
     public class OAuthClient
     {
 
-        [TestMethod]
+        [Fact]
         public void GetAuthorizeUrl()
         {
             var client = new Medium.OAuthClient("clientId", "clientSecret");
@@ -24,7 +23,7 @@ namespace Medium.Tests
                 "response_type=code&" +
                 "redirect_uri=uri&";
 
-            Assert.AreEqual(expectedUrl, authorizeUrl);
+            Assert.Equal(expectedUrl, authorizeUrl);
         }
 
     }

@@ -2,11 +2,10 @@
 using System.Linq;
 using Medium.Authentication;
 using Medium.Models;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Medium.Tests
 {
-    [TestClass]
     public class Client
     {
 
@@ -18,56 +17,56 @@ namespace Medium.Tests
             return new Token { AccessToken = _accessToken };
         }
 
-        [TestMethod]
+        [Fact]
         public void GetCurrentUser()
         {
             var client = new Medium.Client();
             var user = client.GetCurrentUser(GetToken());
-            Assert.IsNotNull(user);
+            Assert.NotEqual(null, user);
 
-            Assert.IsNotNull(user.Id);
-            Assert.IsNotNull(user.Username);
-            Assert.IsNotNull(user.Name);
-            Assert.IsNotNull(user.Url);
-            Assert.IsNotNull(user.ImageUrl);
+            Assert.NotEqual(null, user.Id);
+            Assert.NotEqual(null, user.Username);
+            Assert.NotEqual(null, user.Name);
+            Assert.NotEqual(null, user.Url);
+            Assert.NotEqual(null, user.ImageUrl);
         }
 
-        [TestMethod]
+        [Fact]
         public void GetPublications()
         {
             var client = new Medium.Client();
             var user = client.GetCurrentUser(GetToken());
-            Assert.IsNotNull(user);
+            Assert.NotEqual(null, user);
 
             var publications = client.GetPublications(user.Id, GetToken());
-            Assert.IsNotNull(publications);
+            Assert.NotEqual(null, publications);
 
             foreach (var publication in publications)
             {
-                Assert.IsNotNull(publication.Id);
-                Assert.IsNotNull(publication.Name);
-                Assert.IsNotNull(publication.Description);
-                Assert.IsNotNull(publication.Url);
-                Assert.IsNotNull(publication.ImageUrl);
+                Assert.NotEqual(null, publication.Id);
+                Assert.NotEqual(null, publication.Name);
+                Assert.NotEqual(null, publication.Description);
+                Assert.NotEqual(null, publication.Url);
+                Assert.NotEqual(null, publication.ImageUrl);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void GetContributors()
         {
             var client = new Medium.Client();
             var contributors = client.GetContributors(_testPublicationId, GetToken());
-            Assert.IsNotNull(contributors);
+            Assert.NotEqual(null, contributors);
 
             foreach (var contributor in contributors)
             {
-                Assert.IsNotNull(contributor.PublicationId);
-                Assert.IsNotNull(contributor.UserId);
-                Assert.IsNotNull(contributor.Role);
+                Assert.NotEqual(null, contributor.PublicationId);
+                Assert.NotEqual(null, contributor.UserId);
+                Assert.NotEqual(null, contributor.Role);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CreatePost()
         {
             var client = new Medium.Client();
@@ -77,8 +76,8 @@ namespace Medium.Tests
             var publishStatus = PublishStatus.Unlisted;
             var license = License.Cc40By;
 
-            var author = client.GetCurrentUser(GetToken());
-            Assert.IsNotNull(author);
+            var author = client.GetCurrentUser(new Token { AccessToken = _accessToken });
+            Assert.NotEqual(null, author);
 
             var body = new CreatePostRequestBody
             {
@@ -91,24 +90,23 @@ namespace Medium.Tests
                 License = license
             };
 
-            var post = client.CreatePost(author.Id, body, GetToken());
-            Assert.IsNotNull(post);
+            var post = client.CreatePost(author.Id, body, new Token { AccessToken = _accessToken });
+            Assert.NotEqual(null, post);
 
-            Assert.IsNotNull(post.Id);
-            Assert.AreEqual(title, post.Title);
-            Assert.AreEqual(author.Id, post.AuthorId);
-            Assert.IsTrue(tags.All(post.Tags.Contains));
-            Assert.IsTrue(post.Tags.All(tags.Contains));
-            Assert.IsNotNull(post.Url);
-            Assert.AreEqual(canonicalUrl, post.CanonicalUrl);
-            Assert.AreEqual(publishStatus, post.PublishStatus);
-            Assert.IsNotNull(post.PublishedAt);
-            Assert.AreEqual(license, post.License);
-            Assert.IsNotNull(post.LicenseUrl);
-            Assert.IsNull(post.PublicationId);
+            Assert.NotEqual(null, post.Id);
+            Assert.Equal(title, post.Title);
+            Assert.Equal(author.Id, post.AuthorId);
+            Assert.Equal(true, tags.All(t => post.Tags.Contains(t)));
+            Assert.Equal(true, post.Tags.All(t => tags.Contains(t)));
+            Assert.NotEqual(null, post.Url);
+            Assert.Equal(canonicalUrl, post.CanonicalUrl);
+            Assert.Equal(publishStatus, post.PublishStatus);
+            Assert.NotEqual(null, post.PublishedAt);
+            Assert.Equal(license, post.License);
+            Assert.NotEqual(null, post.LicenseUrl);
         }
 
-        [TestMethod]
+        [Fact]
         public void CreatePostUnderPublication()
         {
             var client = new Medium.Client();
@@ -119,7 +117,7 @@ namespace Medium.Tests
             var license = License.Cc40By;
 
             var author = client.GetCurrentUser(GetToken());
-            Assert.IsNotNull(author);
+            Assert.NotEqual(null, author);
 
             var body = new CreatePostRequestBody
             {
@@ -133,25 +131,25 @@ namespace Medium.Tests
             };
 
             var post = client.CreatePostUnderPublication(_testPublicationId, body, GetToken());
-            Assert.IsNotNull(post);
+            Assert.NotEqual(null, post);
 
-            Assert.IsNotNull(post.Id);
-            Assert.AreEqual(title, post.Title);
-            Assert.AreEqual(author.Id, post.AuthorId);
-            Assert.IsTrue(tags.All(post.Tags.Contains));
-            Assert.IsTrue(post.Tags.All(tags.Contains));
-            Assert.IsNotNull(post.Url);
-            Assert.AreEqual(canonicalUrl, post.CanonicalUrl);
-            Assert.AreEqual(publishStatus, post.PublishStatus);
-            Assert.IsNotNull(post.PublishedAt);
-            Assert.AreEqual(license, post.License);
-            Assert.IsNotNull(post.LicenseUrl);
+            Assert.NotEqual(null, post.Id);
+            Assert.Equal(title, post.Title);
+            Assert.Equal(author.Id, post.AuthorId);
+            Assert.Equal(true, tags.All(post.Tags.Contains));
+            Assert.Equal(true, post.Tags.All(tags.Contains));
+            Assert.NotEqual(null, post.Url);
+            Assert.Equal(canonicalUrl, post.CanonicalUrl);
+            Assert.Equal(publishStatus, post.PublishStatus);
+            Assert.NotEqual(null, post.PublishedAt);
+            Assert.Equal(license, post.License);
+            Assert.NotEqual(null, post.LicenseUrl);
 
-            Assert.IsNotNull(post.PublicationId);
-            Assert.AreEqual(_testPublicationId, post.PublicationId);
+            Assert.NotEqual(null, post.PublicationId);
+            Assert.Equal(_testPublicationId, post.PublicationId);
         }
 
-        [TestMethod]
+        [Fact]
         public void UploadImage()
         {
             var client = new Medium.Client();
@@ -165,10 +163,10 @@ namespace Medium.Tests
             string md5 = System.Convert.ToBase64String(
                 System.Security.Cryptography.MD5.Create().ComputeHash(body.ContentBytes)).TrimEnd('=');
 
-            var image = client.UploadImage(body, GetToken());
-            Assert.IsNotNull(image);
-            Assert.IsNotNull(image.Url);
-            Assert.AreEqual(md5, image.Md5);
+            var image = client.UploadImage(body, new Token {AccessToken = _accessToken});
+            Assert.NotEqual(null, image);
+            Assert.NotEqual(null, image.Url);
+            Assert.Equal(md5, image.Md5);
         }
 
     }
