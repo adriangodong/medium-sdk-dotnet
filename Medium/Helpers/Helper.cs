@@ -169,7 +169,7 @@ namespace Medium.Helpers
         public static string GenerateWwwFormUrlEncodedString(Dictionary<string, string> parameters)
         {
             return parameters.
-                Select(p => $"{p.Key}={System.Text.Encodings.Web.UrlEncoder.Default.Encode(p.Value)}").
+                Select(p => $"{p.Key}={System.Net.WebUtility.UrlEncode(p.Value)}").
                 ConcatenateString("&");
         }
 

@@ -19,8 +19,6 @@
         "System.Net.Http": "4.0.1-beta-23516",
         "System.Net.Requests": "4.0.11-beta-23516",
         "System.Runtime": "4.0.21-beta-23516",
-        "System.Text.Encoding": "4.0.11-beta-23516",
-        "System.Text.Encodings.Web": "4.0.0-beta-23516",
         "System.Text.RegularExpressions": "4.0.11-beta-23516",
         "System.Threading": "4.0.11-beta-23516",
         "System.Threading.Tasks": "4.0.11-beta-23516"
