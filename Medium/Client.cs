@@ -42,30 +42,19 @@ namespace Medium
 
         public Post CreatePost(string authorId, CreatePostRequestBody createPostRequestBody, Token token)
         {
-            var request = Helper.
-                GetRequestWithToken(
-                    BaseUrl + $"/users/{authorId}/posts",
-                    System.Net.Http.HttpMethod.Post,
-                    token).
-                SetRequestJson(new
-                {
-                    title = createPostRequestBody.Title,
-                    contentFormat = createPostRequestBody.ContentFormat.ToString().ToLowerInvariant(),
-                    content = createPostRequestBody.Content,
-                    tags = createPostRequestBody.Tags,
-                    canonicalUrl = createPostRequestBody.CanonicalUrl,
-                    publishStatus = createPostRequestBody.PublishStatus.ToString().ToLowerInvariant(),
-                    license = createPostRequestBody.License.ToString().CamelCaseToSpinalCase(),
-                });
-
-            return request.GetResponseJson<Post>();
+            return CreatePostInternal($"/users/{authorId}/posts", createPostRequestBody, token);
         }
 
         public Post CreatePostUnderPublication(string publicationId, CreatePostRequestBody createPostRequestBody, Token token)
         {
+            return CreatePostInternal($"/publications/{publicationId}/posts", createPostRequestBody, token);
+        }
+
+        private Post CreatePostInternal(string endpointUrl, CreatePostRequestBody createPostRequestBody, Token token)
+        {
             var request = Helper.
                 GetRequestWithToken(
-                    BaseUrl + $"/publications/{publicationId}/posts",
+                    BaseUrl + endpointUrl,
                     System.Net.Http.HttpMethod.Post,
                     token).
                 SetRequestJson(new
