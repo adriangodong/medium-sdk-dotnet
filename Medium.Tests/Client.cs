@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Linq;
 using Medium.Authentication;
 using Medium.Models;
@@ -75,6 +76,7 @@ namespace Medium.Tests
             var canonicalUrl = "http://jamietalbot.com/posts/liverpool-fc";
             var publishStatus = PublishStatus.Unlisted;
             var license = License.Cc40By;
+            var publishedAt = new DateTime(2015, 1, 1);
 
             var author = client.GetCurrentUser(new Token { AccessToken = _accessToken });
             Assert.NotEqual(null, author);
@@ -87,7 +89,9 @@ namespace Medium.Tests
                 Tags = tags,
                 CanonicalUrl = canonicalUrl,
                 PublishStatus = publishStatus,
-                License = license
+                License = license,
+                PublishedAt = publishedAt,
+                NotifyFollowers = false,
             };
 
             var post = client.CreatePost(author.Id, body, new Token { AccessToken = _accessToken });
@@ -102,6 +106,7 @@ namespace Medium.Tests
             Assert.Equal(canonicalUrl, post.CanonicalUrl);
             Assert.Equal(publishStatus, post.PublishStatus);
             Assert.NotEqual(null, post.PublishedAt);
+            Assert.Equal(publishedAt, post.PublishedAt);
             Assert.Equal(license, post.License);
             Assert.NotEqual(null, post.LicenseUrl);
         }

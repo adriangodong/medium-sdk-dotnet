@@ -66,6 +66,8 @@ namespace Medium
                     canonicalUrl = createPostRequestBody.CanonicalUrl,
                     publishStatus = createPostRequestBody.PublishStatus.ToString().ToLowerInvariant(),
                     license = createPostRequestBody.License.ToString().CamelCaseToSpinalCase(),
+                    publishedAt = createPostRequestBody.PublishedAt,
+                    notifyFollowers = createPostRequestBody.NotifyFollowers,
                 });
 
             return request.GetResponseJson<Post>();
