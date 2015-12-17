@@ -136,8 +136,8 @@ namespace Medium.Tests
             Assert.NotEqual(null, post.Id);
             Assert.Equal(title, post.Title);
             Assert.Equal(author.Id, post.AuthorId);
-            Assert.Equal(true, tags.All(post.Tags.Contains));
-            Assert.Equal(true, post.Tags.All(tags.Contains));
+            Assert.Equal(true, tags.All(t => post.Tags.Contains(t)));
+            Assert.Equal(true, post.Tags.All(t => tags.Contains(t)));
             Assert.NotEqual(null, post.Url);
             Assert.Equal(canonicalUrl, post.CanonicalUrl);
             Assert.Equal(publishStatus, post.PublishStatus);
