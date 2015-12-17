@@ -7696,7 +7696,9 @@
       "Medium ",
       "xunit >= 2.1.0"
     ],
-    ".NETFramework,Version=v4.5.1": [],
+    ".NETFramework,Version=v4.5.1": [
+      "fx/System.Runtime >= 4.0.10"
+    ],
     "DNXCore,Version=v5.0": [
       "xunit.runner.dnx >= 2.1.0-rc1-build204",
       "Microsoft.CSharp >= 4.0.1-beta-23516",

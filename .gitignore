@@ -6,3 +6,4 @@ Medium.Tests/*.user
 Medium.Tests/bin
 Medium.Tests/obj
 packages/*
+artifacts/*

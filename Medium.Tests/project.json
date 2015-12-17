@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "description": "MediumSdk Tests",
   "authors": [ "Adrian Godong" ],
@@ -17,11 +17,14 @@
   },
 
   "commands": {
-    "test": "xunit.runner.dnx"
   },
 
   "frameworks": {
-    "net451": { },
+    "net451": {
+      "frameworkAssemblies": {
+        "System.Runtime": "4.0.10.0"
+      }
+    },
     "dnxcore50": {
       "dependencies": {
         "xunit.runner.dnx": "2.1.0-rc1-build204",
