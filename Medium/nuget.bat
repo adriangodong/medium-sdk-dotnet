@@ -1,1 +1,1 @@
-nuget pack -sym Medium.csproj -Prop Configuration=Release
+dotnet pack --configuration release
