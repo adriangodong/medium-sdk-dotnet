@@ -2,15 +2,13 @@
   "version": "1.0.0-*",
   "description": "MediumSdk",
   "authors": [ "Adrian Godong" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
   "tooling": {
     "defaultNamespace": "Medium"
   },
 
   "dependencies": {
-    "Newtonsoft.Json": "8.0.1-beta3"
+    "NETStandard.Library": "1.6.0",
+    "Newtonsoft.Json": "9.0.1"
   },
 
   "frameworks": {
@@ -19,18 +17,19 @@
         "System.Net.Http": "4.0.0.0"
       }
     },
-    "dnxcore50": {
+    "netstandard1.6": {
       "dependencies": {
-        "Microsoft.CSharp": "4.0.1-beta-23516",
-        "System.Collections": "4.0.11-beta-23516",
-        "System.Linq": "4.0.1-beta-23516",
-        "System.Net.Http": "4.0.1-beta-23516",
-        "System.Net.Requests": "4.0.11-beta-23516",
-        "System.Runtime": "4.0.21-beta-23516",
-        "System.Text.RegularExpressions": "4.0.11-beta-23516",
-        "System.Threading": "4.0.11-beta-23516",
-        "System.Threading.Tasks": "4.0.11-beta-23516"
-      }
+        "Microsoft.CSharp": "4.0.1",
+        "System.Collections": "4.0.11",
+        "System.Linq": "4.1.0",
+        "System.Net.Http": "4.1.0",
+        "System.Net.Requests": "4.0.11",
+        "System.Runtime": "4.1.0",
+        "System.Text.RegularExpressions": "4.1.0",
+        "System.Threading": "4.0.11",
+        "System.Threading.Tasks": "4.0.11"
+      },
+      "imports": "dnxcore50"
     }
   }
 }

@@ -2,18 +2,18 @@
   "version": "1.0.0-*",
   "description": "MediumSdk Tests",
   "authors": [ "Adrian Godong" ],
-  "tags": [ "" ],
-  "projectUrl": "",
-  "licenseUrl": "",
   "tooling": {
     "defaultNamespace": "Medium"
   },
+  "testRunner": "xunit",
 
   "dependencies": {
-    "Microsoft.Extensions.Configuration": "1.0.0-rc1-final",
-    "Microsoft.Extensions.Configuration.Json": "1.0.0-rc1-final",
-    "Medium": "",
-    "xunit": "2.1.0"
+    "NETStandard.Library": "1.6.0",
+    "Microsoft.Extensions.Configuration": "1.0.0",
+    "Microsoft.Extensions.Configuration.Json": "1.0.0",
+    "xunit": "2.2.0-beta4-build3444",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Medium": "1.0.0-*"
   },
 
   "commands": {
@@ -25,13 +25,22 @@
         "System.Runtime": "4.0.10.0"
       }
     },
-    "dnxcore50": {
+    "netcoreapp1.0": {
       "dependencies": {
-        "xunit.runner.dnx": "2.1.0-rc1-build204",
-        "Microsoft.CSharp": "4.0.1-beta-23516",
-        "System.Linq": "4.0.1-beta-23516",
-        "System.Security.Cryptography.Algorithms": "4.0.0-beta-23516"
+        "Microsoft.CSharp": "4.0.1",
+        "System.Linq": "4.1.0",
+        "System.Security.Cryptography.Algorithms": "4.2.0",
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0"
+        }
       }
+    }
+  },
+
+  "buildOptions": {
+    "copyToOutput": {
+      "includeFiles": ["config.json"]
     }
   }
 }

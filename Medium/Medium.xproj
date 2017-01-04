@@ -9,8 +9,8 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>8f657816-1ad0-48c3-9b0e-abbec045bd8e</ProjectGuid>
     <RootNamespace>Medium</RootNamespace>
-    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\artifacts\obj\$(MSBuildProjectName)</BaseIntermediateOutputPath>
-    <OutputPath Condition="'$(OutputPath)'=='' ">..\artifacts\bin\$(MSBuildProjectName)\</OutputPath>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">..\artifacts\obj</BaseIntermediateOutputPath>
+    <OutputPath Condition="'$(OutputPath)'=='' ">..\artifacts\bin</OutputPath>
   </PropertyGroup>
 
   <PropertyGroup>
