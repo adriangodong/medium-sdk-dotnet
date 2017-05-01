@@ -14,8 +14,8 @@ namespace Medium.Helpers
     internal static class Helper
     {
 
-        private static readonly Regex IsUpperCaseRegex = new Regex("([A-Z])", RegexOptions.Compiled);
-        private static readonly Regex IsSetOfDigitsRegex = new Regex("(\\d+)", RegexOptions.Compiled);
+        private static readonly Regex IsUpperCaseRegex = new Regex("([A-Z])");
+        private static readonly Regex IsSetOfDigitsRegex = new Regex("(\\d+)");
 
         public static HttpWebRequest GetRequestWithToken(
             string endpointUrl,
@@ -31,10 +31,10 @@ namespace Medium.Helpers
 
             request.Method = method.Method.ToUpper();
             request.Accept = "application/json";
-            request.Headers.Add(HttpRequestHeader.AcceptCharset, "utf-8");
+            request.Headers[HttpRequestHeader.AcceptCharset] = "utf-8";
 
             if (token != null)
-                request.Headers.Add("Authorization", "Bearer " + token.AccessToken);
+                request.Headers["Authorization"] = "Bearer " + token.AccessToken;
 
             return request;
         }
@@ -74,9 +74,11 @@ namespace Medium.Helpers
             var requestBodySuffixBytes = Encoding.UTF8.GetBytes($"{Environment.NewLine}--{boundary}--");
 
             request.ContentType = $"multipart/form-data; boundary={boundary}";
-            request.GetRequestStream().Write(requestBodyPrefixBytes, 0, requestBodyPrefixBytes.Length);
-            request.GetRequestStream().Write(content, 0, content.Length);
-            request.GetRequestStream().Write(requestBodySuffixBytes, 0, requestBodySuffixBytes.Length);
+            
+            var requestStream = request.GetRequestStream();
+            requestStream.Write(requestBodyPrefixBytes, 0, requestBodyPrefixBytes.Length);
+            requestStream.Write(content, 0, content.Length);
+            requestStream.Write(requestBodySuffixBytes, 0, requestBodySuffixBytes.Length);
 
             return request;
         }
@@ -120,7 +122,7 @@ namespace Medium.Helpers
                         responseBodyByteArray[i] = (byte)responseStream.ReadByte();
                     }
 
-                    var responseBody = Encoding.UTF8.GetString(responseBodyByteArray);
+                    var responseBody = Encoding.UTF8.GetString(responseBodyByteArray, 0, responseBodyByteArray.Length);
 
                     return responseBodyParser(responseBody);
                 }
@@ -147,7 +149,7 @@ namespace Medium.Helpers
             if (stream.CanSeek && seekToStart)
                 stream.Seek(0, SeekOrigin.Begin);
             stream.Read(buffer, 0, (int)stream.Length);
-            return (encoding ?? Encoding.UTF8).GetString(buffer);
+            return (encoding ?? Encoding.UTF8).GetString(buffer, 0, buffer.Length);
         }
 
         // Core.Common.cs
@@ -167,7 +169,7 @@ namespace Medium.Helpers
         public static string GenerateWwwFormUrlEncodedString(Dictionary<string, string> parameters)
         {
             return parameters.
-                Select(p => $"{p.Key}={WebUtility.UrlEncode(p.Value)}").
+                Select(p => $"{p.Key}={System.Net.WebUtility.UrlEncode(p.Value)}").
                 ConcatenateString("&");
         }
 
@@ -205,5 +207,19 @@ namespace Medium.Helpers
                 ToLowerInvariant();
         }
 
+        private static Stream GetRequestStream(this WebRequest request)
+        {
+            System.Threading.Tasks.Task<Stream> task = request.GetRequestStreamAsync();
+            while (!task.IsCompleted) { }
+            return task.Result;
+        }
+        
+        private static WebResponse GetResponse(this WebRequest request)
+        {
+            System.Threading.Tasks.Task<WebResponse> task = request.GetResponseAsync();
+            while (!task.IsCompleted) { }
+            return task.Result;
+        }
+        
     }
 }

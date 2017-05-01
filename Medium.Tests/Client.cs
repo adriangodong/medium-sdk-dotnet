@@ -1,6 +1,5 @@
-﻿using System;
-using System.Configuration;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
 using Medium.Authentication;
 using Medium.Models;
 using Xunit;
@@ -10,8 +9,16 @@ namespace Medium.Tests
     public class Client
     {
 
-        private readonly string _accessToken = ConfigurationManager.AppSettings["AccessToken"];
-        private readonly string _testPublicationId = ConfigurationManager.AppSettings["TestPublicationId"];
+        private readonly string _accessToken;
+        private readonly string _testPublicationId;
+
+        public Client() {
+            var configuration = new ConfigurationBuilder().
+                AddJsonFile("config.json").
+                Build();
+            _accessToken =  configuration["AccessToken"];
+            _testPublicationId = configuration["TestPublicationId"];
+        }
 
         private Token GetToken()
         {
@@ -78,7 +85,7 @@ namespace Medium.Tests
             var license = License.Cc40By;
             var publishedAt = new DateTime(2015, 1, 1);
 
-            var author = client.GetCurrentUser(new Token { AccessToken = _accessToken });
+            var author = client.GetCurrentUser(GetToken());
             Assert.NotEqual(null, author);
 
             var body = new CreatePostRequestBody
@@ -94,7 +101,7 @@ namespace Medium.Tests
                 NotifyFollowers = false,
             };
 
-            var post = client.CreatePost(author.Id, body, new Token { AccessToken = _accessToken });
+            var post = client.CreatePost(author.Id, body, GetToken());
             Assert.NotEqual(null, post);
 
             Assert.NotEqual(null, post.Id);
@@ -168,7 +175,7 @@ namespace Medium.Tests
             string md5 = System.Convert.ToBase64String(
                 System.Security.Cryptography.MD5.Create().ComputeHash(body.ContentBytes)).TrimEnd('=');
 
-            var image = client.UploadImage(body, new Token {AccessToken = _accessToken});
+            var image = client.UploadImage(body, GetToken());
             Assert.NotEqual(null, image);
             Assert.NotEqual(null, image.Url);
             Assert.Equal(md5, image.Md5);
