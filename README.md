@@ -2,6 +2,8 @@
 
 This repository contains the open source SDK for integrating [Medium's OAuth2 API](https://github.com/Medium/medium-api-docs) into your .NET app.
 
+[![Build status](https://ci.appveyor.com/api/projects/status/u1lmowf82gdckxmo?svg=true)](https://ci.appveyor.com/project/adriangodong/medium-sdk-dotnet)
+
 Install
 -------
 
