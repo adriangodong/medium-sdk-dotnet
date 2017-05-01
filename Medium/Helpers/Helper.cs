@@ -14,8 +14,8 @@ namespace Medium.Helpers
     internal static class Helper
     {
 
-        private static readonly Regex IsUpperCaseRegex = new Regex("([A-Z])", RegexOptions.Compiled);
-        private static readonly Regex IsSetOfDigitsRegex = new Regex("(\\d+)", RegexOptions.Compiled);
+        private static readonly Regex IsUpperCaseRegex = new Regex("([A-Z])");
+        private static readonly Regex IsSetOfDigitsRegex = new Regex("(\\d+)");
 
         public static HttpWebRequest GetRequestWithToken(
             string endpointUrl,
@@ -122,7 +122,7 @@ namespace Medium.Helpers
                         responseBodyByteArray[i] = (byte)responseStream.ReadByte();
                     }
 
-                    var responseBody = Encoding.UTF8.GetString(responseBodyByteArray);
+                    var responseBody = Encoding.UTF8.GetString(responseBodyByteArray, 0, responseBodyByteArray.Length);
 
                     return responseBodyParser(responseBody);
                 }
@@ -149,7 +149,7 @@ namespace Medium.Helpers
             if (stream.CanSeek && seekToStart)
                 stream.Seek(0, SeekOrigin.Begin);
             stream.Read(buffer, 0, (int)stream.Length);
-            return (encoding ?? Encoding.UTF8).GetString(buffer);
+            return (encoding ?? Encoding.UTF8).GetString(buffer, 0, buffer.Length);
         }
 
         // Core.Common.cs
