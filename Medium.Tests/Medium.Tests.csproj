@@ -7,6 +7,7 @@
     <AssemblyName>Medium.Tests</AssemblyName>
     <PackageId>Medium.Tests</PackageId>
     <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <IsPackable>False</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

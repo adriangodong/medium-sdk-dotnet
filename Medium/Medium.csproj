@@ -1,11 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>MediumSdk</Description>
-    <Authors>Adrian Godong</Authors>
+    <Title>MediumSdk</Title>
+    <Description>Medium API .NET SDK</Description>
+    <Authors>adrian</Authors>
     <TargetFrameworks>netstandard1.2</TargetFrameworks>
-    <AssemblyName>Medium</AssemblyName>
-    <PackageId>Medium</PackageId>
+    <AssemblyName>MediumSdk</AssemblyName>
+    <PackageId>MediumSdk</PackageId>
+    <PackageTags>medium;sdk</PackageTags>
+    <IncludeSymbols>True</IncludeSymbols>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Version>2.0.0</Version>
     <PackageProjectUrl>https://github.com/adriangodong/medium-sdk-dotnet</PackageProjectUrl>
