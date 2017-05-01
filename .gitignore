@@ -1,10 +1,10 @@
 Medium/*.user
 Medium/bin
 Medium/obj
-Medium.Tests/App.config
 Medium.Tests/*.user
 Medium.Tests/bin
 Medium.Tests/obj
 packages/*
 artifacts/*
 /.vs
+/.vscode
