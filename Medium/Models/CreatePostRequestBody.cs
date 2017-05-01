@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -13,5 +14,7 @@ namespace Medium.Models
         public string CanonicalUrl { get; set; }
         public PublishStatus PublishStatus { get; set; }
         public License License { get; set; }
+        public DateTime? PublishedAt { get; set; }
+        public bool? NotifyFollowers { get; set; }
     }
 }
