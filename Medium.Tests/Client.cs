@@ -15,7 +15,7 @@ namespace Medium.Tests
 
         public Client() {
             var configuration = new ConfigurationBuilder().
-                AddJsonFile("config.json").
+                AddEnvironmentVariables("MEDIUMSDK_").
                 Build();
             _accessToken =  configuration["AccessToken"];
             _testPublicationId = configuration["TestPublicationId"];
