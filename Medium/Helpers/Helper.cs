@@ -116,15 +116,7 @@ namespace Medium.Helpers
                     if (responseStream == null)
                         return default(T);
 
-                    var responseBodyByteArray = new byte[response.ContentLength];
-                    for (var i = 0; i < response.ContentLength; i++)
-                    {
-                        responseBodyByteArray[i] = (byte)responseStream.ReadByte();
-                    }
-
-                    var responseBody = Encoding.UTF8.GetString(responseBodyByteArray, 0, responseBodyByteArray.Length);
-
-                    return responseBodyParser(responseBody);
+                    return responseBodyParser(responseStream.ReadToEnd());
                 }
             }
             catch (WebException ex)
@@ -143,13 +135,13 @@ namespace Medium.Helpers
         public static string ReadToEnd(
             this Stream stream,
             bool seekToStart = true,
-            System.Text.Encoding encoding = null)
+            Encoding encoding = null)
         {
-            var buffer = new byte[stream.Length];
             if (stream.CanSeek && seekToStart)
                 stream.Seek(0, SeekOrigin.Begin);
-            stream.Read(buffer, 0, (int)stream.Length);
-            return (encoding ?? Encoding.UTF8).GetString(buffer, 0, buffer.Length);
+
+            return (encoding == null ? new StreamReader(stream) : new StreamReader(stream, encoding))
+                .ReadToEnd();
         }
 
         // Core.Common.cs
