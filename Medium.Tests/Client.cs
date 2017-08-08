@@ -80,7 +80,7 @@ namespace Medium.Tests
         {
             var client = new Medium.Client();
             var title = "Liverpool FC";
-            var tags = new[] { "football", "sport", "liverpool" };
+            var tags = new[] { "football", "sports", "liverpool" };
             var canonicalUrl = "http://jamietalbot.com/posts/liverpool-fc";
             var publishStatus = PublishStatus.Unlisted;
             var license = License.Cc40By;
@@ -124,7 +124,7 @@ namespace Medium.Tests
         {
             var client = new Medium.Client();
             var title = "Liverpool FC";
-            var tags = new[] { "football", "sport", "liverpool" };
+            var tags = new[] { "football", "sports", "liverpool" };
             var canonicalUrl = "http://jamietalbot.com/posts/liverpool-fc";
             var publishStatus = PublishStatus.Public;
             var license = License.Cc40By;
