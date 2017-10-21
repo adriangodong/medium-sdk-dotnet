@@ -1,18 +1,28 @@
-version: '{build}'
 image: Visual Studio 2017
 configuration: Release
+version: '{build}'
+
+dotnet_csproj:
+  patch: true
+  file: 'Medium\Medium.csproj'
+  version: $(appveyor_repo_tag_name)
+
 before_build:
 - cmd: dotnet restore
+
 build:
   project: MediumSdk.sln
+
 test_script:
   - cmd: dotnet test Medium.Tests/Medium.Tests.csproj
+
 artifacts:
 - path: '**/*.nupkg'
   name: Nuget Packages
+
 deploy:
 - provider: NuGet
   api_key:
     secure: y7n963kT1eor3dpj742k0mwnMPXsWGnljEGlfUr2zaGgqtMOJ4OegiWmLctuGYlY
   on:
-    branch: master
+    appveyor_repo_tag: master
