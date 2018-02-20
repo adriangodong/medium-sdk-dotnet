@@ -14,7 +14,7 @@ namespace Medium.Models
         public string Url { get; set; }
         public string CanonicalUrl { get; set; }
         public PublishStatus PublishStatus { get; set; }
-        [JsonConverter(typeof(UnixTimestampConverter))]
+        [JsonConverter(typeof(JsonNetConverters.UnixTime.UnixTimeConverter))]
         public DateTime? PublishedAt { get; set; }
         [JsonConverter(typeof(LicenseEnumConverter))]
         public License License { get; set; }

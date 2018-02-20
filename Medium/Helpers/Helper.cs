@@ -165,13 +165,6 @@ namespace Medium.Helpers
                 ConcatenateString("&");
         }
 
-        // Core.TimeUtilities.cs
-        public static DateTime? FromUnixTimestampMs(long? timestamp)
-        {
-            if (!timestamp.HasValue) return null;
-            return new DateTime(1970, 1, 1).AddMilliseconds(timestamp.Value);
-        }
-
         // Core.StringExtensions.cs
         public static string Replace(this string source, Regex regex, string replacement)
         {

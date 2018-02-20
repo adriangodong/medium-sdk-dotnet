@@ -18,7 +18,7 @@ namespace Medium.Authentication
         public Scope[] Scope { get; set; }
 
         [JsonProperty(PropertyName = "expires_at")]
-        [JsonConverter(typeof(UnixTimestampConverter))]
+        [JsonConverter(typeof(JsonNetConverters.UnixTime.UnixTimeConverter))]
         public DateTime ExpiresAt { get; set; }
     }
 }
